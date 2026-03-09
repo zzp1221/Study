@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 212.64.23.8:8848
