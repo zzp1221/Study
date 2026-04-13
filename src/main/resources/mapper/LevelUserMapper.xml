@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.test.mapper.LevelUserMapper">
+
+    <resultMap id="LoginRequestResultMap" type="com.project.test.DTO.LoginRequest">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="level" column="level"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="findById" resultMap="LoginRequestResultMap">
+        SELECT id, username, level, password FROM user WHERE id = #{id} AND deleteFlag = 0
+    </select>
+
+    <select id="findByUsername" resultMap="LoginRequestResultMap">
+        SELECT id, username, level, password FROM user WHERE username = #{username} AND deleteFlag = 0
+    </select>
+
+    <update id="updateLevelById">
+        UPDATE user SET level = #{level} WHERE id = #{id}
+    </update>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (username, password, level, deleteFlag)
+        VALUES (#{username}, #{password}, #{level}, 0)
+    </insert>
+</mapper>

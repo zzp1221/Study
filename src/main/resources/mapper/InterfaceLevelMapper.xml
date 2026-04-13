@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.test.mapper.InterfaceLevelMapper">
+
+    <resultMap id="InterfaceLevelResultMap" type="com.project.test.entity.InterfaceLevel">
+        <id property="id" column="id"/>
+        <result property="interfacePath" column="interface_path"/>
+        <result property="interfaceMethod" column="interface_method"/>
+        <result property="requiredLevel" column="required_level"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="findByPathAndMethod" resultMap="InterfaceLevelResultMap">
+        SELECT * FROM interface_level 
+        WHERE interface_path = #{path} 
+        AND interface_method = #{method}
+        AND status = 1
+    </select>
+
+    <select id="findAll" resultMap="InterfaceLevelResultMap">
+        SELECT * FROM interface_level WHERE status = 1 ORDER BY required_level, id
+    </select>
+
+    <select id="findById" resultMap="InterfaceLevelResultMap">
+        SELECT * FROM interface_level WHERE id = #{id} AND status = 1
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO interface_level (
+            interface_path, interface_method, required_level, description, status
+        ) VALUES (
+            #{interfacePath}, #{interfaceMethod}, #{requiredLevel}, #{description}, #{status}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE interface_level
+        <set>
+            <if test="interfacePath != null">interface_path = #{interfacePath},</if>
+            <if test="interfaceMethod != null">interface_method = #{interfaceMethod},</if>
+            <if test="requiredLevel != null">required_level = #{requiredLevel},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteById">
+        UPDATE interface_level SET status = 0 WHERE id = #{id}
+    </update>
+</mapper>

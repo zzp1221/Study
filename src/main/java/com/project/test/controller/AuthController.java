@@ -6,20 +6,14 @@ import com.project.test.common.exception.CommonException;
 import com.project.test.common.result.Result;
 import com.project.test.common.security.AuthTokenService;
 import com.project.test.common.util.SecurityUtil;
-
+import com.project.test.mapper.LevelUserMapper;
 import com.project.test.mapper.RegisterMapper;
-import com.project.test.mapper.UserMapper;
-import com.project.test.mapper.AuthorityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import com.project.test.entity.Authority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-
 
 @Slf4j
 @RestController
@@ -28,8 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final RegisterMapper registerMapper;
-    private final UserMapper userMapper;
-    private final AuthorityMapper authorityMapper;
+    private final LevelUserMapper userMapper;
     private final AuthTokenService authTokenService;
 
     @PostMapping("/register")

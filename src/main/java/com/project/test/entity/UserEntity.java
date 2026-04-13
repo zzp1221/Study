@@ -6,7 +6,7 @@ import lombok.Data;
 public class UserEntity {
     private int id;
     private String username;
-    private Authority authority;
+    private Integer level;
     private String password;
     private int deleteFlag;
 }
