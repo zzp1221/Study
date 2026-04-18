@@ -1,7 +1,6 @@
 package com.project.test.controller;
 
 import com.project.test.DTO.LoginRequest;
-import com.project.test.common.annotation.RequireLevel;
 import com.project.test.common.exception.CommonException;
 import com.project.test.common.result.Result;
 import com.project.test.common.util.SecurityUtil;
@@ -46,12 +45,12 @@ public class AuthorityController {
                 throw new CommonException("当前用户不存在");
             }
 
-            if (currentUser.getLevel() >= targetUser.getLevel()) {
-                throw new CommonException("无法修改等级大于等于自己的用户");
-            }
-
-            if (currentUser.getLevel() >= level) {
-                throw new CommonException("无法将用户等级修改为大于等于自己的等级");
+            // level 1 用户可以修改任何用户（超级管理员特权）
+            if (currentUser.getLevel() != 1) {
+                // 其他等级不能修改 level 1 用户
+                if (targetUser.getLevel() == 1) {
+                    throw new CommonException("无法修改超级管理员");
+                }
             }
 
             int result = levelUserMapper.updateLevelById(targetUser.getId(), level);
@@ -100,8 +99,12 @@ public class AuthorityController {
                 throw new CommonException("当前用户不存在");
             }
 
-            if (currentUser.getLevel() >= targetUser.getLevel()) {
-                throw new CommonException("无法修改等级大于等于自己的用户密码");
+            // level 1 用户可以修改任何用户的密码（超级管理员特权）
+            if (currentUser.getLevel() != 1) {
+                // 其他等级不能修改 level 1 用户的密码
+                if (targetUser.getLevel() == 1) {
+                    throw new CommonException("无法修改超级管理员的密码");
+                }
             }
 
             String encryptedPassword = SecurityUtil.encrypt(password);

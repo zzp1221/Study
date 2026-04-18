@@ -6,7 +6,7 @@
         <id property="id" column="id"/>
         <result property="interfacePath" column="interface_path"/>
         <result property="interfaceMethod" column="interface_method"/>
-        <result property="requiredLevel" column="required_level"/>
+        <result property="allowedLevels" column="allowed_levels"/>
         <result property="description" column="description"/>
         <result property="status" column="status"/>
     </resultMap>
@@ -19,7 +19,7 @@
     </select>
 
     <select id="findAll" resultMap="InterfaceLevelResultMap">
-        SELECT * FROM interface_level WHERE status = 1 ORDER BY required_level, id
+        SELECT * FROM interface_level WHERE status = 1 ORDER BY id
     </select>
 
     <select id="findById" resultMap="InterfaceLevelResultMap">
@@ -28,9 +28,9 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO interface_level (
-            interface_path, interface_method, required_level, description, status
+            interface_path, interface_method, allowed_levels, description, status
         ) VALUES (
-            #{interfacePath}, #{interfaceMethod}, #{requiredLevel}, #{description}, #{status}
+            #{interfacePath}, #{interfaceMethod}, #{allowedLevels}, #{description}, #{status}
         )
     </insert>
 
@@ -39,7 +39,7 @@
         <set>
             <if test="interfacePath != null">interface_path = #{interfacePath},</if>
             <if test="interfaceMethod != null">interface_method = #{interfaceMethod},</if>
-            <if test="requiredLevel != null">required_level = #{requiredLevel},</if>
+            <if test="allowedLevels != null">allowed_levels = #{allowedLevels},</if>
             <if test="description != null">description = #{description},</if>
             <if test="status != null">status = #{status},</if>
         </set>

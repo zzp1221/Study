@@ -59,18 +59,4 @@ public class LevelService {
     public int deleteInterfaceLevel(Long id) {
         return interfaceLevelMapper.deleteById(id);
     }
-
-    public boolean canUserAccess(Integer userId, String path, String method) {
-        LoginRequest user = levelUserMapper.findById(userId);
-        if (user == null || user.getLevel() == null) {
-            return false;
-        }
-
-        InterfaceLevel interfaceLevel = interfaceLevelMapper.findByPathAndMethod(path, method);
-        if (interfaceLevel == null) {
-            return false;
-        }
-
-        return user.getLevel() <= interfaceLevel.getRequiredLevel();
-    }
 }

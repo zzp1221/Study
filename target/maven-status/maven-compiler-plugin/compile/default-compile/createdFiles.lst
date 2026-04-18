@@ -2,9 +2,9 @@ com\project\test\DTO\RegisterUser.class
 com\project\test\service\LevelService.class
 com\project\test\common\annotation\DynamicRequireAuthority$Logical.class
 com\project\test\mapper\RegisterMapper.class
-com\project\test\common\annotation\RequireLevel.class
 com\project\test\common\util\SecurityUtil.class
 com\project\test\mapper\LevelUserMapper.class
+com\project\test\common\exception\GlobalExceptionHandler.class
 com\project\test\controller\LevelController.class
 com\project\test\TestApplication.class
 com\project\test\mapper\InterfaceLevelMapper.class
@@ -19,7 +19,6 @@ com\project\test\controller\AuthController.class
 com\project\test\common\config\WebConfig.class
 com\project\test\common\security\AuthTokenService.class
 com\project\test\common\result\Result.class
-com\project\test\common\aspect\LevelPermissionAspect.class
 com\project\test\common\constant\CommonConstants$StatusCode.class
 com\project\test\common\security\LoginInterceptor.class
 com\project\test\controller\AuthorityController.class

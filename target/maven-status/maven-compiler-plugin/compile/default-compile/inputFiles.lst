@@ -1,10 +1,9 @@
 D:\项目\test\src\main\java\com\project\test\common\annotation\DynamicRequireAuthority.java
-D:\项目\test\src\main\java\com\project\test\common\annotation\RequireLevel.java
-D:\项目\test\src\main\java\com\project\test\common\aspect\LevelPermissionAspect.java
 D:\项目\test\src\main\java\com\project\test\common\config\WebConfig.java
 D:\项目\test\src\main\java\com\project\test\common\constant\CommonConstants.java
 D:\项目\test\src\main\java\com\project\test\common\exception\CommonException.java
 D:\项目\test\src\main\java\com\project\test\common\exception\ErrorCode.java
+D:\项目\test\src\main\java\com\project\test\common\exception\GlobalExceptionHandler.java
 D:\项目\test\src\main\java\com\project\test\common\interceptor\LevelInterceptor.java
 D:\项目\test\src\main\java\com\project\test\common\result\Result.java
 D:\项目\test\src\main\java\com\project\test\common\security\AuthTokenService.java

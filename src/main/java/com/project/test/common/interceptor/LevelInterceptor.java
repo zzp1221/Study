@@ -63,24 +63,33 @@ public class LevelInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        Integer requiredLevel = interfaceLevel.getRequiredLevel();
-        if (requiredLevel == null) {
+        String allowedLevels = interfaceLevel.getAllowedLevels();
+        if (allowedLevels == null || allowedLevels.trim().isEmpty()) {
             log.warn("接口 {} {} 的等级配置为空，允许访问", method, requestURI);
             return true;
         }
 
-        log.debug("接口 {} {} 需要的等级为：{}", method, requestURI, requiredLevel);
+        log.debug("接口 {} {} 允许的等级为：{}", method, requestURI, allowedLevels);
 
-        // 权限验证：用户等级 <= 接口要求等级
-        if (userLevel > requiredLevel) {
-            log.warn("用户 {} 等级不足，当前等级：{}, 需要等级：{}, 接口：{} {}", 
-                    currentUser.getUsername(), userLevel, requiredLevel, method, requestURI);
-            throw new CommonException(ErrorCode.FORBIDDEN, 
-                    String.format("等级不足，当前等级%d，需要等级%d", userLevel, requiredLevel));
+        // level 1 用户可以访问所有接口（超级管理员特权）
+        if (userLevel == 1) {
+            log.debug("用户 {} 是超级管理员，允许访问", currentUser.getUsername());
+            return true;
         }
 
-        log.debug("用户 {} 权限验证通过", currentUser.getUsername());
-        return true;
+        // 检查用户的 level 是否在允许的等级列表中
+        String[] levels = allowedLevels.split(",");
+        for (String level : levels) {
+            if (level.trim().equals(String.valueOf(userLevel))) {
+                log.debug("用户 {} 权限验证通过", currentUser.getUsername());
+                return true;
+            }
+        }
+
+        log.warn("用户 {} 等级不足，当前等级：{}, 允许的等级：{}, 接口：{} {}", 
+                currentUser.getUsername(), userLevel, allowedLevels, method, requestURI);
+        throw new CommonException(
+                String.format("该接口等级为%s，你的等级为%d，不允许访问", allowedLevels, userLevel));
     }
 
     /**
